@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amos Badeaux — Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            black: '#0A0A0A',
+            offblack: '#141414',
+            gold: { DEFAULT: '#D4AF37', light: '#E8C766', dark: '#A88A2B' },
+            fire: { DEFAULT: '#E63946', light: '#F26D77', dark: '#B02832' },
+            electric: { DEFAULT: '#00B4D8', light: '#48CAE4', dark: '#0077B6' },
+            chrome: { DEFAULT: '#C0C0C0', light: '#E0E0E0', dark: '#8A8A8A' },
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'Impact', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0A0A0A; color: white; }
+    .font-display { font-family: 'Bebas Neue', Impact, sans-serif; letter-spacing: 0.05em; }
+    .placeholder-pulse {
+      background: linear-gradient(135deg, #141414, #0A0A0A, #141414);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .cinematic-overlay {
+      background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.7) 60%, rgba(10,10,10,1) 100%);
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- ============================================ -->
+  <!-- HEADER — dynamically pulls from Business Settings -->
+  <!-- ============================================ -->
+  <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-gold/20">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <span class="font-display text-2xl text-gold tracking-wider">AMOS BADEAUX</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm">
+        <a href="#autocare" class="hover:text-gold transition">Autocare</a>
+        <a href="#fireworks" class="hover:text-fire transition">Fireworks</a>
+        <a href="#limousine" class="hover:text-gold transition">Limousine</a>
+        <a href="#inflatables" class="hover:text-electric transition">Jump & Splash</a>
+        <a href="#about" class="hover:text-gold transition">About</a>
+        <a href="#contact" class="hover:text-gold transition">Contact</a>
+      </nav>
+      <a href="tel:+13375551234" class="hidden md:flex items-center gap-2 bg-gold text-black px-4 py-2 rounded-full font-semibold hover:bg-gold/90 transition">
+        📞 (337) 555-1234
+      </a>
+      <a href="tel:+13375551234" class="md:hidden bg-gold text-black p-3 rounded-full">📞</a>
+    </div>
+  </header>
+
+  <!-- ============================================ -->
+  <!-- HERO — Homepage cinematic intro -->
+  <!-- ============================================ -->
+  <section class="relative h-[85vh] flex items-center justify-center overflow-hidden">
+    <!-- Placeholder for hero video/image -->
+    <div class="absolute inset-0 placeholder-pulse flex items-center justify-center border-b border-gold/20">
+      <div class="text-center">
+        <div class="text-gold/40 text-6xl mb-4">🎬</div>
+        <p class="font-display text-gold/60 tracking-widest uppercase">Homepage Hero Video Placeholder</p>
+        <p class="text-gray-500 text-xs mt-2">Upload via Admin → Media Library</p>
+      </div>
+    </div>
+    <div class="absolute inset-0 cinematic-overlay"></div>
+
+    <div class="relative z-10 text-center px-4 max-w-4xl">
+      <h1 class="font-display text-6xl md:text-8xl text-white mb-4 tracking-wider drop-shadow-2xl">
+        AMOS <span class="text-gold">BADEAUX</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-300 italic mb-8">"The Man Who Sells Fun."</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="#services" class="bg-gold text-black px-8 py-3 rounded-full font-semibold hover:bg-gold-light transition">
+          Explore Services
+        </a>
+        <a href="#contact" class="border-2 border-gold text-gold px-8 py-3 rounded-full font-semibold hover:bg-gold hover:text-black transition">
+          Get a Quote
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SERVICES GRID — the 4 verticals -->
+  <!-- ============================================ -->
+  <section id="services" class="py-20 px-4">
+    <div class="container mx-auto">
+      <h2 class="font-display text-5xl md:text-6xl text-center text-gold tracking-wider mb-4">FOUR BUSINESSES. ONE NAME.</h2>
+      <p class="text-center text-gray-400 mb-16 max-w-2xl mx-auto">From showroom shine to sky-splitting spectacle — Amos delivers experiences worth remembering.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- AUTOCARE CARD -->
+        <a href="#autocare" class="group relative h-80 rounded-lg overflow-hidden border border-chrome/30 hover:border-chrome transition">
+          <div class="absolute inset-0 placeholder-pulse flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-chrome/40 text-5xl">🚗</div>
+              <p class="text-chrome/60 text-xs mt-2 uppercase tracking-widest">Autocare Hero Image</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h3 class="font-display text-3xl text-chrome-light tracking-wider">BADEAUX'S AUTOCARE</h3>
+            <p class="text-gray-300 text-sm mt-2">Professional detailing that makes your ride look showroom-new.</p>
+            <span class="inline-block mt-4 text-chrome group-hover:translate-x-2 transition">Explore →</span>
+          </div>
+        </a>
+
+        <!-- FIREWORKS CARD -->
+        <a href="#fireworks" class="group relative h-80 rounded-lg overflow-hidden border border-fire/30 hover:border-fire transition">
+          <div class="absolute inset-0 placeholder-pulse flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-fire/40 text-5xl">🎆</div>
+              <p class="text-fire/60 text-xs mt-2 uppercase tracking-widest">Fireworks Hero Image</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h3 class="font-display text-3xl text-fire-light tracking-wider">BADEAUX FIREWORKS</h3>
+            <p class="text-gray-300 text-sm mt-2">Light up the sky. Events, retail, and pro pyrotechnics.</p>
+            <span class="inline-block mt-4 text-fire group-hover:translate-x-2 transition">Explore →</span>
+          </div>
+        </a>
+
+        <!-- LIMOUSINE CARD -->
+        <a href="#limousine" class="group relative h-80 rounded-lg overflow-hidden border border-gold/30 hover:border-gold transition">
+          <div class="absolute inset-0 placeholder-pulse flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-gold/40 text-5xl">🚙</div>
+              <p class="text-gold/60 text-xs mt-2 uppercase tracking-widest">Limousine Hero Video</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h3 class="font-display text-3xl text-gold-light tracking-wider">BADEAUX LIMOUSINE</h3>
+            <p class="text-gray-300 text-sm mt-2">Arrive in style. Weddings, proms, nights out — VIP always.</p>
+            <span class="inline-block mt-4 text-gold group-hover:translate-x-2 transition">Explore →</span>
+          </div>
+        </a>
+
+        <!-- INFLATABLES CARD -->
+        <a href="#inflatables" class="group relative h-80 rounded-lg overflow-hidden border border-electric/30 hover:border-electric transition">
+          <div class="absolute inset-0 placeholder-pulse flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-electric/40 text-5xl">🎈</div>
+              <p class="text-electric/60 text-xs mt-2 uppercase tracking-widest">Jump & Splash Hero Image</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h3 class="font-display text-3xl text-electric-light tracking-wider">JUMP & SPLASH</h3>
+            <p class="text-gray-300 text-sm mt-2">Inflatables, water slides, party rentals. Pure kid joy.</p>
+            <span class="inline-block mt-4 text-electric group-hover:translate-x-2 transition">Explore →</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SAMPLE SERVICE PAGE PREVIEW (Autocare) -->
+  <!-- ============================================ -->
+  <section id="autocare" class="py-20 px-4 bg-offblack border-t border-chrome/20">
+    <div class="container mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-chrome text-sm uppercase tracking-widest mb-2">Service Page Preview</p>
+        <h2 class="font-display text-5xl md:text-6xl text-chrome-light tracking-wider">BADEAUX'S AUTOCARE</h2>
+        <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Below is how the "Product Showcase" window front will look on each service page.</p>
+      </div>
+
+      <!-- PRODUCT GRID (default state of the ProductShowcase) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="group cursor-pointer">
+          <div class="aspect-square placeholder-pulse rounded-lg border border-chrome/20 group-hover:border-chrome transition flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-chrome/40 text-3xl">🚗</div>
+              <p class="text-chrome/50 text-xs mt-2">PRODUCT 1</p>
+            </div>
+          </div>
+          <p class="text-center mt-3 font-display text-lg tracking-wider">BASIC WASH</p>
+          <p class="text-center text-chrome text-sm">$45</p>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="aspect-square placeholder-pulse rounded-lg border border-chrome/20 group-hover:border-chrome transition flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-chrome/40 text-3xl">✨</div>
+              <p class="text-chrome/50 text-xs mt-2">PRODUCT 2</p>
+            </div>
+          </div>
+          <p class="text-center mt-3 font-display text-lg tracking-wider">PREMIUM DETAIL</p>
+          <p class="text-center text-chrome text-sm">$150</p>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="aspect-square placeholder-pulse rounded-lg border border-chrome/20 group-hover:border-chrome transition flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-chrome/40 text-3xl">💎</div>
+              <p class="text-chrome/50 text-xs mt-2">PRODUCT 3</p>
+            </div>
+          </div>
+          <p class="text-center mt-3 font-display text-lg tracking-wider">CERAMIC COAT</p>
+          <p class="text-center text-chrome text-sm">$500</p>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="aspect-square placeholder-pulse rounded-lg border border-chrome/20 group-hover:border-chrome transition flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-chrome/40 text-3xl">🛞</div>
+              <p class="text-chrome/50 text-xs mt-2">PRODUCT 4</p>
+            </div>
+          </div>
+          <p class="text-center mt-3 font-display text-lg tracking-wider">FULL INTERIOR</p>
+          <p class="text-center text-chrome text-sm">$120</p>
+        </div>
+      </div>
+
+      <p class="text-center text-gray-500 text-sm mt-8 italic">
+        ↑ Clicking any product opens the "spotlight" view with swipe navigation (Batch 3 build).
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- ADMIN CHECKLIST PREVIEW -->
+  <!-- ============================================ -->
+  <section class="py-20 px-4 bg-black border-t border-gold/20">
+    <div class="container mx-auto max-w-2xl">
+      <p class="text-gold text-sm uppercase tracking-widest text-center mb-2">Admin Dashboard Preview</p>
+      <h2 class="font-display text-4xl text-center text-gold tracking-wider mb-8">SETUP CHECKLIST</h2>
+      <div class="bg-offblack border border-gold/20 rounded-lg p-6 space-y-3">
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Business name configured</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Phone configured</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Email configured</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Website configured</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Address configured</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Business hours configured</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Social media configured</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Logo uploaded</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Homepage images uploaded</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Autocare images uploaded</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Fireworks images uploaded</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Limo images uploaded</div>
+        <div class="flex items-center gap-3"><span class="text-gold">☐</span> Inflatables images uploaded</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FOOTER — 100% dynamic from Business Settings -->
+  <!-- ============================================ -->
+  <footer class="bg-black text-white border-t border-gold/20 mt-20">
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="font-display text-2xl text-gold tracking-wider mb-2">AMOS BADEAUX</h3>
+          <p class="text-gray-400 italic text-sm">"The Man Who Sells Fun."</p>
+        </div>
+        <div>
+          <h4 class="font-display text-lg text-gold mb-4">SERVICES</h4>
+          <ul class="space-y-2 text-gray-300 text-sm">
+            <li><a href="#autocare" class="hover:text-gold">Badeaux's Autocare</a></li>
+            <li><a href="#fireworks" class="hover:text-fire">Badeaux Fireworks</a></li>
+            <li><a href="#limousine" class="hover:text-gold">Limousine Rentals</a></li>
+            <li><a href="#inflatables" class="hover:text-electric">Jump & Splash</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-display text-lg text-gold mb-4">CONTACT</h4>
+          <ul class="space-y-3 text-gray-300 text-sm">
+            <li><a href="tel:+13375551234" class="flex items-center gap-2 hover:text-gold">📞 (337) 555-1234</a></li>
+            <li><a href="mailto:hello@example.com" class="flex items-center gap-2 hover:text-gold">✉️ hello@example.com</a></li>
+            <li class="flex items-start gap-2">📍 123 Main St, Lafayette, LA 70501</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-display text-lg text-gold mb-4">HOURS</h4>
+          <ul class="space-y-1 text-sm text-gray-300">
+            <li><span class="text-gold">Mon:</span> 9AM – 6PM</li>
+            <li><span class="text-gold">Tue:</span> 9AM – 6PM</li>
+            <li><span class="text-gold">Wed:</span> 9AM – 6PM</li>
+            <li><span class="text-gold">Thu:</span> 9AM – 6PM</li>
+            <li><span class="text-gold">Fri:</span> 9AM – 8PM</li>
+            <li><span class="text-gold">Sat:</span> 10AM – 8PM</li>
+            <li><span class="text-gold">Sun:</span> Closed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-10 pt-8 border-t border-gold/10 flex justify-center gap-6 text-gray-400">
+        <a href="#" class="hover:text-gold" aria-label="Facebook">📘</a>
+        <a href="#" class="hover:text-gold" aria-label="Instagram">📷</a>
+        <a href="#" class="hover:text-gold" aria-label="TikTok">🎵</a>
+        <a href="#" class="hover:text-gold" aria-label="YouTube">▶️</a>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-gold/10 text-center text-gray-500 text-sm">
+        © 2025 Amos Badeaux. All rights reserved. · Owned & operated by Amos Badeaux
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+P

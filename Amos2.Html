@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amos Badeaux — Preview v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // BLUE PALETTE FROM AMOS'S BANNERS
+            royal: '#1E3A8A',
+            royaldeep: '#152C6B',
+            electric: '#2563EB',
+            sky: '#60A5FA',
+            aqua: '#00D9FF',
+            cyan: '#22D3EE',
+            // ACCENTS
+            gold: '#FCD34D',
+            goldwarm: '#F59E0B',
+            fire: '#F97316',
+            red: '#DC2626',
+            pink: '#EC4899',
+            lime: '#A3E635',
+            cream: '#FFF8E7',
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'Impact', 'sans-serif'],
+            fun: ['Fredoka', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #FFF8E7;
+      background: linear-gradient(180deg, #1E3A8A 0%, #2563EB 50%, #1E3A8A 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    .font-display { font-family: 'Bebas Neue', Impact, sans-serif; letter-spacing: 0.05em; }
+    .font-fun { font-family: 'Fredoka', system-ui, sans-serif; }
+
+    /* STARFIELD BACKGROUND */
+    .starfield {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, #FCD34D, transparent),
+        radial-gradient(2px 2px at 40px 70px, #FFF, transparent),
+        radial-gradient(1px 1px at 90px 40px, #60A5FA, transparent),
+        radial-gradient(2px 2px at 160px 120px, #FCD34D, transparent),
+        radial-gradient(1px 1px at 200px 60px, #FFF, transparent),
+        radial-gradient(2px 2px at 280px 180px, #EC4899, transparent),
+        radial-gradient(1px 1px at 340px 90px, #FCD34D, transparent),
+        radial-gradient(2px 2px at 420px 200px, #FFF, transparent),
+        radial-gradient(1px 1px at 500px 40px, #60A5FA, transparent),
+        radial-gradient(2px 2px at 580px 150px, #FCD34D, transparent);
+      background-size: 600px 250px;
+      background-repeat: repeat;
+      opacity: 0.6;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+
+    .content-layer { position: relative; z-index: 1; }
+
+    .glow-gold { text-shadow: 0 0 20px rgba(252,211,77,0.6), 0 0 40px rgba(252,211,77,0.4); }
+    .glow-cyan { box-shadow: 0 0 20px rgba(0,217,255,0.5), 0 0 40px rgba(0,217,255,0.3); }
+    .glow-pink { box-shadow: 0 0 20px rgba(236,72,153,0.5); }
+    .glow-fire { box-shadow: 0 0 20px rgba(249,115,22,0.5); }
+    .glow-gold-box { box-shadow: 0 0 20px rgba(252,211,77,0.5); }
+
+    .card-blue {
+      background: linear-gradient(135deg, rgba(30,58,138,0.85) 0%, rgba(37,99,235,0.75) 100%);
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(96,165,250,0.4);
+    }
+
+    .banner-frame {
+      background: linear-gradient(135deg, #FCD34D, #F97316, #DC2626, #EC4899, #2563EB);
+      padding: 4px;
+      border-radius: 12px;
+    }
+    .banner-inner {
+      background: #1E3A8A;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .marquee-border {
+      border-image: repeating-linear-gradient(
+        45deg,
+        #DC2626 0px, #DC2626 10px,
+        #FFF 10px, #FFF 20px,
+        #2563EB 20px, #2563EB 30px
+      ) 4;
+      border-width: 4px;
+      border-style: solid;
+    }
+
+    .sparkle::before {
+      content: '✨';
+      position: absolute;
+      animation: sparkleFloat 3s ease-in-out infinite;
+    }
+    @keyframes sparkleFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      50% { transform: translateY(-10px) rotate(180deg); opacity: 0.7; }
+    }
+
+    /* IMAGE PLACEHOLDER STYLING — visible & vibrant */
+    .img-placeholder {
+      background: linear-gradient(135deg, #2563EB, #60A5FA, #00D9FF);
+      background-size: 200% 200%;
+      animation: shimmer 3s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1E3A8A;
+      font-weight: 700;
+      text-align: center;
+      padding: 1rem;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANIMATED STAR BACKGROUND (fixed to viewport) -->
+  <div class="starfield"></div>
+
+  <div class="content-layer">
+
+    <!-- ============================================ -->
+    <!-- HEADER -->
+    <!-- ============================================ -->
+    <header class="sticky top-0 z-50 bg-royaldeep/90 backdrop-blur-md border-b-4 border-gold">
+      <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+          <span class="font-display text-3xl text-gold glow-gold tracking-wider">AMOS BADEAUX</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+          <a href="#autocare" class="text-cream hover:text-aqua transition">Auto Care</a>
+          <a href="#fireworks" class="text-cream hover:text-fire transition">Fireworks</a>
+          <a href="#limo" class="text-cream hover:text-gold transition">Limo</a>
+          <a href="#inflatables" class="text-cream hover:text-pink transition">Jump N Splash</a>
+          <a href="#about" class="text-cream hover:text-aqua transition">About</a>
+          <a href="#contact" class="text-cream hover:text-gold transition">Contact</a>
+        </nav>
+        <a href="tel:+13375173287" class="hidden md:flex items-center gap-2 bg-gold text-royaldeep px-5 py-2 rounded-full font-bold hover:bg-goldwarm transition glow-gold-box">
+          📞 337-517-3287
+        </a>
+        <a href="tel:+13375173287" class="md:hidden bg-gold text-royaldeep p-3 rounded-full glow-gold-box">📞</a>
+      </div>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- HERO — Amos's actual umbrella banner as bg -->
+    <!-- ============================================ -->
+    <section class="relative py-20 md:py-32 px-4 overflow-hidden">
+      <div class="container mx-auto text-center relative z-10">
+        <!-- Placeholder for Amos hero image -->
+        <div class="banner-frame max-w-4xl mx-auto mb-8">
+          <div class="banner-inner img-placeholder" style="height: 400px;">
+            <div>
+              <div class="text-6xl mb-4">👨‍💼🎆</div>
+              <p class="font-display text-2xl tracking-widest">AMOS HERO BANNER GOES HERE</p>
+              <p class="text-sm mt-2 opacity-80">(That epic photo of you holding sparklers with all 4 businesses)</p>
+            </div>
+          </div>
+        </div>
+
+        <h1 class="font-display text-6xl md:text-8xl text-gold glow-gold tracking-wider mb-4">
+          CALL AMOS BADEAUX
+        </h1>
+        <p class="font-fun text-2xl md:text-3xl text-cream mb-2">
+          Inflatable Rentals · Car Washes · Fireworks · Limousines
+        </p>
+        <p class="text-lg text-aqua italic mb-8">"The Man Who Sells Fun."</p>
+
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="tel:+13375173287" class="bg-gold text-royaldeep px-8 py-4 rounded-full font-bold text-lg hover:bg-goldwarm transition glow-gold-box">
+            📞 CALL 337-517-3287
+          </a>
+          <a href="sms:+13375173287" class="bg-fire text-cream px-8 py-4 rounded-full font-bold text-lg hover:bg-goldwarm transition glow-fire">
+            💬 TEXT AMOS
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SERVICES GRID -->
+    <!-- ============================================ -->
+    <section id="services" class="py-20 px-4">
+      <div class="container mx-auto">
+        <h2 class="font-display text-5xl md:text-7xl text-center text-gold glow-gold tracking-wider mb-4">
+          FOUR BUSINESSES. ONE NAME.
+        </h2>
+        <p class="text-center text-cream text-lg mb-16 max-w-2xl mx-auto">
+          From bounce houses to bottle service — Amos delivers the fun.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- AUTOCARE -->
+          <a href="#autocare" class="group card-blue rounded-xl overflow-hidden hover:glow-cyan transition">
+            <div class="img-placeholder" style="height: 220px;">
+              <div>
+                <div class="text-5xl">🚗💦</div>
+                <p class="font-display text-xl mt-2 tracking-widest">AUTOCARE BANNER</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-3xl text-aqua tracking-wider">BADEAUX'S AUTO CARE</h3>
+              <p class="text-cream italic text-sm">"We Keep You Looking Good!"</p>
+              <p class="text-cream/80 text-sm mt-3">Hand washing · Window tinting · Full detail</p>
+              <span class="inline-block mt-4 text-aqua font-bold group-hover:translate-x-2 transition">Explore →</span>
+            </div>
+          </a>
+
+          <!-- FIREWORKS -->
+          <a href="#fireworks" class="group card-blue rounded-xl overflow-hidden hover:glow-fire transition">
+            <div class="img-placeholder" style="height: 220px; background: linear-gradient(135deg, #F97316, #DC2626, #EC4899);">
+              <div>
+                <div class="text-5xl">🎆</div>
+                <p class="font-display text-xl mt-2 tracking-widest">FIREWORKS BANNER</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-3xl text-fire tracking-wider">BADEAUX'S FIREWORKS</h3>
+              <p class="text-cream italic text-sm">"Light Up The Night!"</p>
+              <p class="text-cream/80 text-sm mt-3">Retail · Events · Professional pyrotechnics</p>
+              <span class="inline-block mt-4 text-fire font-bold group-hover:translate-x-2 transition">Explore →</span>
+            </div>
+          </a>
+
+          <!-- LIMO -->
+          <a href="#limo" class="group card-blue rounded-xl overflow-hidden hover:glow-gold-box transition">
+            <div class="img-placeholder" style="height: 220px; background: linear-gradient(135deg, #FCD34D, #F97316, #1E3A8A);">
+              <div>
+                <div class="text-5xl">🚙✨</div>
+                <p class="font-display text-xl mt-2 tracking-widest">LIMO BANNER</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-display text-3xl text-gold tracking-wider">BADEAUX'S LIMO SERVICE</h3>
+              <p class="text-cream italic text-sm">"Making Every Ride a VIP Experience"</p>
+              <p class="text-cream/80 text-sm mt-3">Weddings · Proms · Concerts · Corporate</p>
+              <span class="inline-block mt-4 text-gold font-bold group-hover:translate-x-2 transition">Explore →</span>
+            </div>
+          </a>
+
+          <!-- INFLATABLES -->
+          <a href="#inflatables" class="group card-blue rounded-xl overflow-hidden hover:glow-pink transition">
+            <div class="img-placeholder" style="height: 220px; background: linear-gradient(135deg, #EC4899, #00D9FF, #A3E635);">
+              <div>
+                <div class="text-5xl">🎈🏰</div>
+                <p class="font-display text-xl mt-2 tracking-widest">JUMP N SPLASH BANNER</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-fun font-bold text-3xl text-pink tracking-wider">JUMP N SPLASH</h3>
+              <p class="text-cream italic text-sm">Bounce · Slide · Splash</p>
+              <p class="text-cream/80 text-sm mt-3">Bounce houses · Mechanical bulls · Waterslides · Dunk tank</p>
+              <span class="inline-block mt-4 text-pink font-bold group-hover:translate-x-2 transition">Explore →</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SAMPLE SERVICE PAGE — AUTOCARE -->
+    <!-- ============================================ -->
+    <section id="autocare" class="py-20 px-4 bg-royaldeep/40 backdrop-blur border-y-4 border-aqua/40">
+      <div class="container mx-auto">
+        <div class="text-center mb-12">
+          <p class="text-aqua text-sm uppercase tracking-widest mb-2 font-bold">Service Page Preview</p>
+          <h2 class="font-display text-5xl md:text-6xl text-aqua glow-cyan tracking-wider">BADEAUX'S AUTO CARE</h2>
+          <p class="text-cream italic mt-2">"We Keep You Looking Good!"</p>
+          <p class="text-cream/70 mt-4 max-w-2xl mx-auto">This is how each service page will look — showcase of products with click-to-spotlight.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="group cursor-pointer">
+            <div class="img-placeholder aspect-square rounded-lg border-2 border-aqua/40 group-hover:border-aqua group-hover:glow-cyan transition">
+              <div>
+                <div class="text-3xl">🚗</div>
+                <p class="text-xs mt-2">PRODUCT 1</p>
+              </div>
+            </div>
+            <p class="text-center mt-3 font-display text-lg tracking-wider text-cream">HAND WASH</p>
+            <p class="text-center text-gold font-bold">$45</p>
+          </div>
+          <div class="group cursor-pointer">
+            <div class="img-placeholder aspect-square rounded-lg border-2 border-aqua/40 group-hover:border-aqua group-hover:glow-cyan transition">
+              <div>
+                <div class="text-3xl">✨</div>
+                <p class="text-xs mt-2">PRODUCT 2</p>
+              </div>
+            </div>
+            <p class="text-center mt-3 font-display text-lg tracking-wider text-cream">FULL DETAIL</p>
+            <p class="text-center text-gold font-bold">$150</p>
+          </div>
+          <div class="group cursor-pointer">
+            <div class="img-placeholder aspect-square rounded-lg border-2 border-aqua/40 group-hover:border-aqua group-hover:glow-cyan transition">
+              <div>
+                <div class="text-3xl">🪟</div>
+                <p class="text-xs mt-2">PRODUCT 3</p>
+              </div>
+            </div>
+            <p class="text-center mt-3 font-display text-lg tracking-wider text-cream">WINDOW TINT</p>
+            <p class="text-center text-gold font-bold">$200+</p>
+          </div>
+          <div class="group cursor-pointer">
+            <div class="img-placeholder aspect-square rounded-lg border-2 border-aqua/40 group-hover:border-aqua group-hover:glow-cyan transition">
+              <div>
+                <div class="text-3xl">💎</div>
+                <p class="text-xs mt-2">PRODUCT 4</p>
+              </div>
+            </div>
+            <p class="text-center mt-3 font-display text-lg tracking-wider text-cream">CERAMIC COAT</p>
+            <p class="text-center text-gold font-bold">$500</p>
+          </div>
+        </div>
+
+        <p class="text-center text-cream/70 text-sm mt-8 italic">
+          ↑ Clicking any product opens the "spotlight" view with swipe navigation
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- ABOUT AMOS -->
+    <!-- ============================================ -->
+    <section id="about" class="py-20 px-4">
+      <div class="container mx-auto max-w-5xl">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div class="img-placeholder rounded-xl banner-frame" style="height: 400px;">
+            <div class="banner-inner img-placeholder w-full h-full">
+              <div>
+                <div class="text-6xl">👨‍💼</div>
+                <p class="font-display text-xl mt-2 tracking-widest">AMOS PHOTO</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 class="font-display text-5xl text-gold glow-gold tracking-wider mb-4">MEET AMOS</h2>
+            <p class="text-cream text-lg leading-relaxed mb-4">
+              Born and raised in Louisiana. Family-owned. Fun guaranteed.
+            </p>
+            <p class="text-cream/80 leading-relaxed mb-6">
+              From lighting up the night sky to keeping your ride showroom-clean, Amos Badeaux runs a family of businesses built on one promise: <span class="text-gold font-bold">people deserve to have fun.</span> Whether it's your kid's birthday bounce house, prom night limo, or the Fourth of July grand finale — Amos and his team show up ready to make it unforgettable.
+            </p>
+            <a href="tel:+13375173287" class="inline-block bg-gold text-royaldeep px-6 py-3 rounded-full font-bold glow-gold-box hover:bg-goldwarm transition">
+              📞 Call Amos Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- ADMIN CHECKLIST -->
+    <!-- ============================================ -->
+    <section class="py-20 px-4 bg-royaldeep/40 backdrop-blur border-y-4 border-gold/40">
+      <div class="container mx-auto max-w-2xl">
+        <p class="text-gold text-sm uppercase tracking-widest text-center mb-2 font-bold">Admin Dashboard Preview</p>
+        <h2 class="font-display text-4xl text-center text-gold glow-gold tracking-wider mb-8">SETUP CHECKLIST</h2>
+        <div class="card-blue rounded-xl p-6 space-y-3">
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Business name configured</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Phone configured</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Email configured</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Address configured</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Business hours configured</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Social media configured</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Logo uploaded</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Homepage hero uploaded</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Autocare images uploaded</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Fireworks images uploaded</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Limo images uploaded</div>
+          <div class="flex items-center gap-3 text-cream"><span class="text-gold text-xl">☐</span> Jump N Splash images uploaded</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================ -->
+    <footer id="contact" class="bg-royaldeep border-t-4 border-gold mt-10">
+      <div class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="font-display text-3xl text-gold glow-gold tracking-wider mb-2">AMOS BADEAUX</h3>
+            <p class="text-aqua italic text-sm">"The Man Who Sells Fun."</p>
+          </div>
+          <div>
+            <h4 class="font-display text-lg text-gold mb-4">SERVICES</h4>
+            <ul class="space-y-2 text-cream text-sm">
+              <li><a href="#autocare" class="hover:text-aqua">Badeaux's Auto Care</a></li>
+              <li><a href="#fireworks" class="hover:text-fire">Badeaux's Fireworks</a></li>
+              <li><a href="#limo" class="hover:text-gold">Limo Service</a></li>
+              <li><a href="#inflatables" class="hover:text-pink">Jump N Splash</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-display text-lg text-gold mb-4">CONTACT</h4>
+            <ul class="space-y-3 text-cream text-sm">
+              <li><a href="tel:+13375173287" class="flex items-center gap-2 hover:text-aqua">📞 337-517-3287</a></li>
+              <li><a href="sms:+13375173287" class="flex items-center gap-2 hover:text-aqua">💬 Text Amos</a></li>
+              <li class="flex items-start gap-2">📍 Louisiana</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-display text-lg text-gold mb-4">HOURS</h4>
+            <ul class="space-y-1 text-sm text-cream">
+              <li><span class="text-gold">Mon:</span> 9AM – 6PM</li>
+              <li><span class="text-gold">Tue:</span> 9AM – 6PM</li>
+              <li><span class="text-gold">Wed:</span> 9AM – 6PM</li>
+              <li><span class="text-gold">Thu:</span> 9AM – 6PM</li>
+              <li><span class="text-gold">Fri:</span> 9AM – 8PM</li>
+              <li><span class="text-gold">Sat:</span> 10AM – 8PM</li>
+              <li><span class="text-gold">Sun:</span> Closed</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t-2 border-gold/30 flex justify-center gap-6 text-cream text-2xl">
+          <a href="#" class="hover:text-aqua transition" aria-label="Facebook">📘</a>
+          <a href="#" class="hover:text-aqua transition" aria-label="Instagram">📷</a>
+          <a href="#" class="hover:text-aqua transition" aria-label="TikTok">🎵</a>
+          <a href="#" class="hover:text-aqua transition" aria-label="YouTube">▶️</a>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gold/20 text-center text-cream/70 text-sm">
+          © 2025 Amos Badeaux. All rights reserved. · Louisiana Born & Raised 🇺🇸
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>
