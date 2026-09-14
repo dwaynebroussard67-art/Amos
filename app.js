@@ -1,0 +1,256 @@
+/* Amos Badeaux — small, framework-free interactions for the static launch site. */
+(() => {
+  const INVENTORY_KEY = "amos_inventory_v1";
+  const QUOTE_KEY = "amos_quote_requests_v1";
+  const defaultInventory = [
+    { id: "rainbow-rush", category: "Bounce houses", name: "Rainbow Rush Combo", description: "Bounce, climb, and slide in one bright setup.", price: "From $325", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Big favorite" },
+    { id: "block-party", category: "Bounce houses", name: "Block Party Castle", description: "A classic jump for birthdays and neighborhood days.", price: "From $250", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Classic" },
+    { id: "tropical-run", category: "Slides", name: "Tropical Splash Run", description: "A colorful wet-and-wild lane for hot Louisiana afternoons.", price: "From $375", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Wet or dry" },
+    { id: "double-lane", category: "Slides", name: "Double Lane Rush", description: "Two lanes means more races and less waiting around.", price: "From $425", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "New" },
+    { id: "dunk-tank", category: "Splash & games", name: "Dunk Tank", description: "The one everybody says they will try once.", price: "From $275", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Crowd pleaser" },
+    { id: "water-day", category: "Splash & games", name: "Water Day Setup", description: "A flexible splash zone built around your space and party.", price: "Call for quote", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Custom" }
+  ];
+  const events = [
+    { month: "june", day: "13", monthLabel: "Jun", title: "Summer inventory preview", description: "See the newest fireworks arrivals before the big weekends.", kind: "Inventory drop" },
+    { month: "june", day: "27", monthLabel: "Jun", title: "Fireworks season kickoff", description: "The season starts here — retail tents and event bookings open.", kind: "Season" },
+    { month: "july", day: "03", monthLabel: "Jul", title: "Fourth of July weekend", description: "Last call for fireworks packages and party rentals.", kind: "Holiday" },
+    { month: "july", day: "04", monthLabel: "Jul", title: "Independence Day finale", description: "The sky gets loud. Reserve early for the best selection.", kind: "Holiday" },
+    { month: "august", day: "15", monthLabel: "Aug", title: "Back-to-school bash", description: "Close the summer with a jump, splash, or last big night out.", kind: "Party" }
+  ];
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const escapeHtml = (value) => String(value ?? "").replace(/[&<>\"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[character]);
+  const inventoryFromStorage = () => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(INVENTORY_KEY));
+      return Array.isArray(stored) && stored.length ? stored : defaultInventory;
+    } catch (_) { return defaultInventory; }
+  };
+  const toast = (message) => {
+    const node = $("#toast");
+    if (!node) return;
+    node.textContent = message;
+    node.classList.add("show");
+    clearTimeout(window.__amosToast);
+    window.__amosToast = setTimeout(() => node.classList.remove("show"), 4200);
+  };
+
+  // Mobile navigation
+  const menuToggle = $(".menu-toggle");
+  const siteNav = $("#siteNav");
+  if (menuToggle && siteNav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = siteNav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    $$("a", siteNav).forEach((link) => link.addEventListener("click", () => {
+      siteNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }));
+  }
+
+  // Dynamic year and lightweight season status.
+  const year = $("#copyrightYear");
+  if (year) year.textContent = new Date().getFullYear();
+  const seasonStatus = $("#seasonStatus");
+  if (seasonStatus) {
+    const month = new Date().getMonth();
+    seasonStatus.textContent = month >= 5 && month <= 7 ? "Live now" : "Next season planning";
+  }
+
+  // Calendar filters
+  const eventsList = $("#eventsList");
+  const renderEvents = (filter = "all") => {
+    if (!eventsList) return;
+    const visible = filter === "all" ? events : events.filter((item) => item.month === filter);
+    eventsList.innerHTML = visible.length ? visible.map((event) => `
+      <article class="event-card">
+        <div class="event-date"><strong>${escapeHtml(event.day)}</strong><span>${escapeHtml(event.monthLabel)}</span></div>
+        <div><h3>${escapeHtml(event.title)}</h3><p>${escapeHtml(event.description)}</p></div>
+        <span class="event-kind">${escapeHtml(event.kind)}</span>
+      </article>
+    `).join("") : `<div class="event-empty">Nothing is posted for this month yet. Check back soon.</div>`;
+  };
+  if (eventsList) {
+    renderEvents();
+    $$(".month-tab").forEach((button) => button.addEventListener("click", () => {
+      $$(".month-tab").forEach((tab) => {
+        const active = tab === button;
+        tab.classList.toggle("active", active);
+        tab.setAttribute("aria-selected", String(active));
+      });
+      renderEvents(button.dataset.month);
+    }));
+  }
+
+  // Jump N Splash inventory and category gallery.
+  const jumpGrid = $("#jumpGrid");
+  const categoryTabs = $("#categoryTabs");
+  const inventoryCount = $("#inventoryCount");
+  const carouselDots = $("#carouselDots");
+  let inventory = inventoryFromStorage();
+  let activeCategory = "All inventory";
+  let galleryItems = [];
+  let galleryIndex = 0;
+
+  const categoryList = () => ["All inventory", ...new Set(inventory.map((item) => item.category).filter(Boolean))];
+  const renderCategories = () => {
+    if (!categoryTabs) return;
+    categoryTabs.innerHTML = categoryList().map((category) => {
+      const count = category === "All inventory" ? inventory.length : inventory.filter((item) => item.category === category).length;
+      return `<button class="category-tab${category === activeCategory ? " active" : ""}" type="button" role="tab" aria-selected="${category === activeCategory}" data-category="${escapeHtml(category)}">${escapeHtml(category)} <span>${String(count).padStart(2, "0")}</span></button>`;
+    }).join("");
+    $$(".category-tab", categoryTabs).forEach((button) => button.addEventListener("click", () => {
+      activeCategory = button.dataset.category;
+      renderCategories();
+      renderInventory();
+    }));
+  };
+  const visibleInventory = () => activeCategory === "All inventory" ? inventory : inventory.filter((item) => item.category === activeCategory);
+  const renderInventory = () => {
+    if (!jumpGrid) return;
+    galleryItems = visibleInventory();
+    if (inventoryCount) inventoryCount.textContent = `Showing ${galleryItems.length} ${activeCategory.toLowerCase()}`;
+    jumpGrid.innerHTML = galleryItems.map((item, index) => `
+      <button class="jump-card" type="button" data-index="${index}" aria-label="Open ${escapeHtml(item.name)} gallery">
+        <div class="jump-card-image"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" /><span class="jump-card-badge">${escapeHtml(item.badge || "Available")}</span></div>
+        <div class="jump-card-body"><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.description)}</p><span class="jump-card-price">${escapeHtml(item.price)}</span></div>
+      </button>
+    `).join("");
+    $$(".jump-card", jumpGrid).forEach((card) => card.addEventListener("click", () => openGallery(Number(card.dataset.index))));
+    if (carouselDots) {
+      carouselDots.innerHTML = galleryItems.map((_, index) => `<span class="${index === 0 ? "active" : ""}"></span>`).join("");
+      carouselDots.style.display = galleryItems.length > 1 ? "flex" : "none";
+    }
+  };
+  if (jumpGrid) {
+    renderCategories();
+    renderInventory();
+    // Keep the mobile card row swipeable without needing a carousel dependency.
+    let downX = 0;
+    let downScroll = 0;
+    jumpGrid.addEventListener("pointerdown", (event) => {
+      if (window.innerWidth > 560) return;
+      downX = event.clientX;
+      downScroll = jumpGrid.scrollLeft;
+      jumpGrid.classList.add("is-dragging");
+      jumpGrid.setPointerCapture?.(event.pointerId);
+    });
+    jumpGrid.addEventListener("pointermove", (event) => {
+      if (!jumpGrid.classList.contains("is-dragging")) return;
+      jumpGrid.scrollLeft = downScroll - (event.clientX - downX);
+    });
+    ["pointerup", "pointercancel", "pointerleave"].forEach((name) => jumpGrid.addEventListener(name, () => jumpGrid.classList.remove("is-dragging")));
+  }
+
+  // Gallery modal: click a category, then previous/next or swipe.
+  const modal = $("#galleryModal");
+  const modalImage = $("#modalImage");
+  const modalTitle = $("#modalTitle");
+  const modalDescription = $("#modalDescription");
+  const modalCategory = $("#modalCategory");
+  const modalPrice = $("#modalPrice");
+  const modalMedia = $(".modal-media");
+  const updateGallery = () => {
+    const item = galleryItems[galleryIndex];
+    if (!item || !modal) return;
+    modalImage.src = item.image;
+    modalImage.alt = item.name;
+    modalTitle.textContent = item.name;
+    modalDescription.textContent = item.description;
+    modalCategory.textContent = item.category;
+    modalPrice.textContent = item.price;
+    $$(".carousel-dots span").forEach((dot, index) => dot.classList.toggle("active", index === galleryIndex));
+  };
+  const openGallery = (index) => {
+    if (!modal || !galleryItems.length) return;
+    galleryIndex = index;
+    updateGallery();
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    $(".modal-close", modal)?.focus();
+  };
+  const closeGallery = () => {
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+  };
+  const moveGallery = (direction) => {
+    if (!galleryItems.length) return;
+    galleryIndex = (galleryIndex + direction + galleryItems.length) % galleryItems.length;
+    updateGallery();
+  };
+  if (modal) {
+    $$("[data-close-modal]", modal).forEach((element) => element.addEventListener("click", closeGallery));
+    $(".modal-prev", modal)?.addEventListener("click", () => moveGallery(-1));
+    $(".modal-next", modal)?.addEventListener("click", () => moveGallery(1));
+    document.addEventListener("keydown", (event) => {
+      if (modal.hidden) return;
+      if (event.key === "Escape") closeGallery();
+      if (event.key === "ArrowLeft") moveGallery(-1);
+      if (event.key === "ArrowRight") moveGallery(1);
+    });
+    let touchStart = 0;
+    modalMedia?.addEventListener("touchstart", (event) => { touchStart = event.changedTouches[0].screenX; }, { passive: true });
+    modalMedia?.addEventListener("touchend", (event) => {
+      const distance = event.changedTouches[0].screenX - touchStart;
+      if (Math.abs(distance) > 45) moveGallery(distance > 0 ? -1 : 1);
+    }, { passive: true });
+  }
+
+  // Limousine gallery thumbnails.
+  const limoImage = $(".limo-main-image img");
+  $$(".limo-thumb").forEach((thumb) => thumb.addEventListener("click", () => {
+    if (!limoImage) return;
+    limoImage.src = thumb.dataset.image;
+    limoImage.alt = thumb.dataset.alt;
+    $$(".limo-thumb").forEach((item) => item.classList.toggle("active", item === thumb));
+  }));
+
+  // Quote calculator. This deliberately stops at a request: payment needs a real payment processor and confirmed availability.
+  const quoteForm = $("#limoQuoteForm");
+  const quoteTotal = $("#quoteTotal");
+  const calculateQuote = () => {
+    if (!quoteForm || !quoteTotal) return 0;
+    const hours = Number(new FormData(quoteForm).get("hours") || 2);
+    const guests = String(new FormData(quoteForm).get("guests") || "1-8");
+    const base = { 2: 600, 3: 900, 4: 1200, 5: 1450 }[hours] || 600;
+    const guestFee = guests === "17-24" ? 150 : guests === "9-16" ? 75 : 0;
+    const extras = $$('input[name="addon"]:checked', quoteForm).reduce((sum, input) => sum + Number(input.value), 0);
+    const total = base + guestFee + extras;
+    quoteTotal.textContent = `$${total.toLocaleString()}`;
+    return total;
+  };
+  if (quoteForm) {
+    const today = new Date().toISOString().split("T")[0];
+    const dateInput = $("input[name=date]", quoteForm);
+    if (dateInput) dateInput.min = today;
+    quoteForm.addEventListener("input", calculateQuote);
+    quoteForm.addEventListener("change", calculateQuote);
+    quoteForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(quoteForm).entries());
+      data.addons = $$('input[name="addon"]:checked', quoteForm).map((input) => input.dataset.label);
+      data.estimate = calculateQuote();
+      data.createdAt = new Date().toISOString();
+      try {
+        const requests = JSON.parse(localStorage.getItem(QUOTE_KEY) || "[]");
+        requests.push(data);
+        localStorage.setItem(QUOTE_KEY, JSON.stringify(requests));
+      } catch (_) { /* Browser storage can be unavailable in private previews. */ }
+      toast(`Thanks, ${data.name.split(" ")[0] || "there"}. Your ${data.estimate.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} starting estimate is saved for review. Amos will follow up with the secure payment link.`);
+    });
+  }
+
+  // Contact form is a front-end handoff until a real inbox endpoint is selected.
+  const contactForm = $("#contactForm");
+  if (contactForm) contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const name = new FormData(contactForm).get("name") || "there";
+    toast(`Thanks, ${String(name).split(" ")[0]}. Your note is ready for Amos — connect this form to the business inbox before launch.`);
+    contactForm.reset();
+  });
+
+  $$('[data-toast]').forEach((button) => button.addEventListener("click", () => toast(button.dataset.toast)));
+})();
