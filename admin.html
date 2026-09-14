@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Amos Badeaux media and inventory manager" />
+  <title>Media Manager | Amos Badeaux</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin-body">
+  <header class="site-header">
+    <div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark">AB</span><span class="brand-copy"><strong>AMOS</strong><em>BADEAUX</em></span></a><a class="button button-outline button-small" href="index.html">View public site <span>↗</span></a></div>
+  </header>
+  <main class="admin-shell">
+    <aside class="admin-sidebar">
+      <div><p class="admin-overline">Control room</p><h1>MEDIA<br /><span>MANAGER.</span></h1><p class="admin-side-copy">Keep the public site current without touching the layout.</p></div>
+      <nav class="admin-side-nav" aria-label="Admin areas"><a class="active" href="#media"><span>▦</span> Media library</a><a href="#inventory"><span>✦</span> Inventory order</a><a href="#requests"><span>◷</span> Quote requests</a></nav>
+      <div class="admin-note"><span>TIP</span><p>Drag the cards to change the order visitors see. The first three are shown first on the public gallery.</p></div>
+    </aside>
+    <section class="admin-main" id="media">
+      <div class="admin-heading"><div><p class="eyebrow eyebrow-cyan"><span></span> Manage the fun</p><h2>MEDIA <span>LIBRARY.</span></h2><p>Upload real photos when you have them. The site will use the same gallery across the public inventory page.</p></div><div class="admin-status"><span class="live-dot"></span> Saved in this browser</div></div>
+      <div class="admin-stats"><div><span id="mediaCount">0</span><small>gallery items</small></div><div><span id="categoryCount">0</span><small>categories</small></div><div><span id="requestCount">0</span><small>saved quote requests</small></div></div>
+      <div class="upload-layout">
+        <label class="drop-zone" id="dropZone" for="fileInput"><input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" multiple /><span class="upload-plus">+</span><strong>Drop photos here</strong><small>or click to browse · JPG, PNG, WEBP</small></label>
+        <div class="upload-settings"><label>Place new photos in<select id="uploadCategory"><option>Bounce houses</option><option>Slides</option><option>Splash &amp; games</option><option>Auto care</option><option>Fireworks</option><option>VIP rides</option></select></label><p>New images are added to the selected category. Edit the card details after uploading.</p><button class="button button-outline button-small" id="restoreDefaults" type="button">Restore sample lineup</button></div>
+      </div>
+      <div class="media-toolbar" id="inventory"><div><p class="admin-overline">Current lineup</p><h3>DRAG TO <span>REORDER.</span></h3></div><div class="toolbar-actions"><label class="search-box"><span>⌕</span><input id="mediaSearch" type="search" placeholder="Search inventory" /></label><button class="button button-pink button-small" id="addItemButton" type="button">+ Add item</button></div></div>
+      <div class="admin-media-grid" id="mediaGrid" aria-live="polite"></div>
+      <section class="requests-section" id="requests"><div class="media-toolbar"><div><p class="admin-overline">Saved locally</p><h3>QUOTE <span>REQUESTS.</span></h3></div><button class="button button-outline button-small" id="clearRequests" type="button">Clear requests</button></div><div class="requests-list" id="requestsList"></div></section>
+    </section>
+  </main>
+  <div class="edit-modal" id="editModal" hidden><div class="edit-backdrop" data-close-edit></div><form class="edit-panel" id="editForm"><button class="modal-close" type="button" data-close-edit aria-label="Close editor">×</button><p class="eyebrow eyebrow-pink"><span></span> Edit inventory</p><h2>MAKE IT <span>YOUR OWN.</span></h2><input type="hidden" name="id" /><div class="form-row"><label>Name<input name="name" required /></label><label>Price label<input name="price" required placeholder="From $325" /></label></div><label>Category<select name="category"><option>Bounce houses</option><option>Slides</option><option>Splash &amp; games</option><option>Auto care</option><option>Fireworks</option><option>VIP rides</option></select></label><label>Short description<textarea name="description" rows="3" required></textarea></label><label>Badge<input name="badge" placeholder="New or Big favorite" /></label><div class="edit-actions"><button class="button button-outline" type="button" data-close-edit>Cancel</button><button class="button button-pink" type="submit">Save item <span>↗</span></button></div></form></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="admin.js"></script>
+</body>
+</html>
