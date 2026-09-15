@@ -1,6 +1,6 @@
 # Amos Badeaux site
 
-This replaces the three static draft files with a small, framework-free site that can be hosted as static files now and connected to a real backend later.
+This replaces the three static draft files with a small, framework-free site that can be hosted as static files now and connected to a real backend later. The inflatable-rental brand is written consistently as **Jump N Splash** throughout the public site and media manager.
 
 ## What is in the launch build
 
@@ -8,7 +8,7 @@ This replaces the three static draft files with a small, framework-free site tha
 - `calendar.html` — dedicated fireworks season calendar and inventory-reveal page.
 - `styles.css` — shared visual system and responsive layout.
 - `app.js` — calendar filters, mobile navigation, quote estimate, gallery modal with keyboard arrows and touch swipe, and browser storage for demo requests/inventory.
-- `admin.html`, `admin.css`, `admin.js` — media manager. A team member can upload photos, edit inventory labels, drag cards to reorder them, remove items, and restore the sample lineup.
+- `admin.html`, `admin.css`, `admin.js` — media manager. A team member can upload photos, choose an approved image with **Use on landing**, edit inventory labels, drag cards to reorder them, remove items, and restore the sample lineup.
 - `assets/images/` — temporary launch imagery used until Amos's own photos are uploaded.
 - `archive/` — the three original drafts preserved for reference. They are not linked from the public site.
 
