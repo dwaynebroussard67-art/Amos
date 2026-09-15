@@ -168,6 +168,18 @@
     ["pointerup", "pointercancel", "pointerleave"].forEach((name) => jumpGrid.addEventListener(name, () => jumpGrid.classList.remove("is-dragging")));
   }
 
+  // Amos's real booth banner photos — the ones he actually runs at the market.
+  const boothItems = [
+    { image: "assets/images/amos/amos-hero-banner.jpg", title: "Call Amos Badeaux", tag: "The man himself", note: "Amos on his own banner — inflatable rentals, car washes, and fireworks. One call, 337-517-3287." },
+    { image: "assets/images/amos/amos-banner-limo.jpg", title: "Ride in Style", tag: "Limo service", note: "Badeaux's Limo Service — weddings, proms, birthdays, concerts, corporate events, and special occasions." },
+    { image: "assets/images/amos/amos-banner-fireworks.jpg", title: "Light Up the Night", tag: "Fireworks", note: "Badeaux's Fireworks — seasonal retail and event support." },
+    { image: "assets/images/amos/amos-banner-inflatables.jpg", title: "Bounce. Slide. Splash!", tag: "Inflatables", note: "Jump N Splash inflatables — bounce houses, water slides, mechanical bulls, and dunk tanks." },
+    { image: "assets/images/amos/amos-banner-jumpsplash.jpg", title: "Jump N Splash", tag: "Jump N Splash", note: "The official Jump N Splash banner — bounce houses, mechanical bulls, waterslides, dunk tank, and more." },
+    { image: "assets/images/amos/amos-banner-rent-from-us.jpg", title: "Rent From Us", tag: "Rent from us", note: "The splash zone at the booth — ready to rent for your date." },
+    { image: "assets/images/amos/amos-banner-autocare.jpg", title: "We Keep You Looking Good", tag: "Auto care", note: "Badeaux's Auto Care — hand washing and window tinting." },
+    { image: "assets/images/amos/amos-banner-autocare-wide.jpg", title: "The Auto Care Booth", tag: "The booth", note: "The full Auto Care banner strung up at the tent." }
+  ];
+
   // Gallery modal: click a category, then previous/next or swipe.
   const modal = $("#galleryModal");
   const modalImage = $("#modalImage");
@@ -175,26 +187,41 @@
   const modalDescription = $("#modalDescription");
   const modalCategory = $("#modalCategory");
   const modalPrice = $("#modalPrice");
+  const modalEyebrow = $("#modalEyebrow");
   const modalMedia = $(".modal-media");
+  let gallerySource = "inventory";
   const updateGallery = () => {
     const item = galleryItems[galleryIndex];
     if (!item || !modal) return;
     modalImage.src = item.image;
-    modalImage.alt = item.name;
-    modalTitle.textContent = item.name;
-    modalDescription.textContent = item.description;
-    modalCategory.textContent = item.category;
-    modalPrice.textContent = item.price;
-    $$(".carousel-dots span").forEach((dot, index) => dot.classList.toggle("active", index === galleryIndex));
+    modalImage.alt = item.title || item.name || "";
+    modalTitle.textContent = item.title || item.name || "";
+    modalDescription.textContent = item.note || item.description || "";
+    modalCategory.textContent = item.tag || item.category || "";
+    modalPrice.textContent = item.price || "";
+    if (modalEyebrow) modalEyebrow.lastChild.textContent = gallerySource === "booth" ? " Straight from the booth" : " Jump N Splash";
+    if (gallerySource === "inventory") $$(".carousel-dots span").forEach((dot, index) => dot.classList.toggle("active", index === galleryIndex));
   };
   const openGallery = (index) => {
     if (!modal || !galleryItems.length) return;
+    gallerySource = "inventory";
     galleryIndex = index;
     updateGallery();
     modal.hidden = false;
     document.body.classList.add("modal-open");
     $(".modal-close", modal)?.focus();
   };
+  const openBoothGallery = (index) => {
+    if (!modal) return;
+    gallerySource = "booth";
+    galleryItems = boothItems;
+    galleryIndex = Math.max(0, Math.min(index, boothItems.length - 1));
+    updateGallery();
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    $(".modal-close", modal)?.focus();
+  };
+  $$("[data-booth-index]").forEach((trigger) => trigger.addEventListener("click", () => openBoothGallery(Number(trigger.dataset.boothIndex) || 0)));
   const closeGallery = () => {
     if (!modal) return;
     modal.hidden = true;

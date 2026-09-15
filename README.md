@@ -23,6 +23,20 @@ The quote builder is intentionally a **front-end prototype**. It calculates a st
 
 The admin page is also browser-only at this stage. Uploaded photos and quote requests live in `localStorage`, which is useful for a working demo but is not shared across devices. A production media manager should move inventory and images to a database/object store with authentication.
 
+## Amos's real photos
+
+The market photos Amos uploaded (his actual booth banners) live in `assets/images/amos/`:
+
+- `amos-hero-banner.jpg` — "Call Amos Badeaux" banner with Amos's picture. Leads the landing hero; tap it to open his booth gallery.
+- `amos-banner-limo.jpg` — "Ride in Style" limo service banner. Used on the VIP rides card and the limo quote gallery.
+- `amos-banner-fireworks.jpg` — "Light Up the Night" fireworks banner. Used on the fireworks card and the calendar page.
+- `amos-banner-inflatables.jpg` — Jump N Splash inflatables banner. Used on the Jump N Splash card.
+- `amos-banner-jumpsplash.jpg` — Jump N Splash logo banner with the bull mascot and phone number.
+- `amos-banner-rent-from-us.jpg` — "Rent From Us" splash zone banner.
+- `amos-banner-autocare.jpg` / `amos-banner-autocare-wide.jpg` — Badeaux's Auto Care banner close-up and the full booth shot. Used on the auto care card and showcase.
+
+The "Straight from the booth" strip on the home page shows all eight, and the hero banner photo opens the same set in the gallery modal. The search-based placeholder images in `assets/images/` are kept for the Jump N Splash inventory cards, the party-bus interior, and the fireworks product shelf.
+
 ## Temporary image sources
 
 The local starter images came from image-search results and should be treated as reference/placeholder material until usage rights are confirmed or Amos's own photos replace them. The result pages returned by the search were:
