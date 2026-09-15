@@ -35,13 +35,18 @@
   </header>
 
   <main id="main">
-    <section class="hero section-dark" aria-labelledby="hero-title">
+    <section class="hero section-dark hero-split" aria-labelledby="hero-title">
       <div class="hero-image" aria-hidden="true">
         <img id="heroImage" src="assets/images/fireworks-celebration-night-sky-colorful-1.jpg" alt="" data-fallback="assets/images/fireworks-celebration-night-sky-colorful-1.jpg" />
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-grid" aria-hidden="true"></div>
-      <div class="container hero-content">
+      <div class="container hero-inner">
+        <button class="hero-portrait" type="button" data-booth-index="0" aria-label="Open the gallery of Amos's real booth banners">
+          <img src="assets/images/amos/amos-hero-banner.jpg" alt="Amos Badeaux smiling on his own 'Call Amos Badeaux' booth banner" />
+          <span class="portrait-note">That's Amos, on his own banner <b>· tap to see his real booth photos</b></span>
+        </button>
+        <div class="hero-content">
         <p class="eyebrow eyebrow-gold"><span></span> South Louisiana's fun department</p>
         <h1 id="hero-title">THE MAN<br />WHO <span>SELLS FUN.</span></h1>
         <p class="hero-lede">Four businesses. One easy place to plan the clean ride, big night, perfect party, or sky-high finale.</p>
@@ -53,6 +58,7 @@
           <span><b>01</b> Built for the good time</span>
           <span><b>02</b> Local, personal, ready</span>
           <span><b>03</b> One call gets it moving</span>
+        </div>
         </div>
       </div>
       <a class="scroll-cue" href="#services" aria-label="Scroll to businesses"><span></span> Scroll to explore</a>
@@ -76,21 +82,40 @@
 
         <div class="service-grid">
           <a class="service-card service-card-auto" href="#autocare">
-            <div class="card-image"><img src="assets/images/professional-car-detailing-clean-vehicle-2.jpg" alt="A freshly cleaned vehicle with a glossy finish" loading="lazy" /><span class="card-number">01</span></div>
+            <div class="card-image"><img src="assets/images/amos/amos-banner-autocare.jpg" alt="Amos's real Badeaux's Auto Care booth banner — We Keep You Looking Good" loading="lazy" /><span class="card-number">01</span></div>
             <div class="service-card-body"><p class="card-kicker">Clean machine</p><h3>BADEAUX'S<br /><span>AUTO CARE</span></h3><p>Hand wash, detail, tint, and the kind of finish that makes you take the long way home.</p><span class="card-link">See the shine <b>↗</b></span></div>
           </a>
           <a class="service-card service-card-fire" href="#calendar">
-            <div class="card-image"><img src="assets/images/fireworks-celebration-night-sky-colorful-2.jpg" alt="Colorful fireworks exploding in a night sky" loading="lazy" /><span class="card-number">02</span></div>
+            <div class="card-image"><img src="assets/images/amos/amos-banner-fireworks.jpg" alt="Amos's real Badeaux's Fireworks booth banner — Light Up the Night" loading="lazy" /><span class="card-number">02</span></div>
             <div class="service-card-body"><p class="card-kicker">Make some noise</p><h3>BADEAUX<br /><span>FIREWORKS</span></h3><p>Seasonal inventory, event support, and a calendar that tells you what is coming next.</p><span class="card-link">See the season <b>↗</b></span></div>
           </a>
           <a class="service-card service-card-limo" href="#limousine">
-            <div class="card-image"><img src="assets/images/luxury-party-bus-limousine-exterior-at-n-2.jpg" alt="A luxury party bus ready for a night out" loading="lazy" /><span class="card-number">03</span></div>
+            <div class="card-image"><img src="assets/images/amos/amos-banner-limo.jpg" alt="Amos's real Ride in Style limo service booth banner with his name and number" loading="lazy" /><span class="card-number">03</span></div>
             <div class="service-card-body"><p class="card-kicker">Arrive different</p><h3>BADEAUX<br /><span>VIP RIDES</span></h3><p>Tell us when, where, and how long. Get a quick estimate for the party bus in a few clicks.</p><span class="card-link">Build a quote <b>↗</b></span></div>
           </a>
           <a class="service-card service-card-jump" href="#jump-splash">
-            <div class="card-image"><img src="assets/images/colorful-inflatable-bounce-house-water-s-1.jpg" alt="Jump N Splash inflatable water slide" loading="lazy" /><span class="card-number">04</span></div>
+            <div class="card-image"><img src="assets/images/amos/amos-banner-inflatables.jpg" alt="Amos's real Jump N Splash inflatables booth banner — Bounce, slide, splash" loading="lazy" /><span class="card-number">04</span></div>
             <div class="service-card-body"><p class="card-kicker">Bring the party</p><h3>JUMP N<br /><span>SPLASH</span></h3><p>Browse Jump N Splash inflatables, water slides, mechanical bulls, dunk tanks, and more.</p><span class="card-link">Browse inventory <b>↗</b></span></div>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section booth-section" id="booth" aria-labelledby="booth-title">
+      <div class="container">
+        <div class="section-heading split-heading">
+          <div><p class="eyebrow eyebrow-gold"><span></span> Straight from the booth</p><h2 id="booth-title">AMOS'S<br /><span>OWN BANNERS.</span></h2></div>
+          <p class="section-intro">These are the real ones — pulled from Amos's own booth, not stock photos. Tap any banner to see it up close.</p>
+        </div>
+        <div class="booth-strip" aria-label="Amos's real booth banner photos">
+          <button class="booth-card" type="button" data-booth-index="0"><img src="assets/images/amos/amos-hero-banner.jpg" alt="Amos Badeaux smiling on his Call Amos Badeaux banner" loading="lazy" /><span class="booth-tag">The man himself</span></button>
+          <button class="booth-card" type="button" data-booth-index="1"><img src="assets/images/amos/amos-banner-limo.jpg" alt="Ride in Style — Badeaux's Limo Service banner with AMOS's name and number" loading="lazy" /><span class="booth-tag">Limo service</span></button>
+          <button class="booth-card" type="button" data-booth-index="2"><img src="assets/images/amos/amos-banner-fireworks.jpg" alt="Badeaux's Fireworks banner — Light Up the Night" loading="lazy" /><span class="booth-tag">Fireworks</span></button>
+          <button class="booth-card" type="button" data-booth-index="3"><img src="assets/images/amos/amos-banner-inflatables.jpg" alt="Jump N Splash inflatables banner — Bounce, slide, splash" loading="lazy" /><span class="booth-tag">Inflatables</span></button>
+          <button class="booth-card" type="button" data-booth-index="4"><img src="assets/images/amos/amos-banner-jumpsplash.jpg" alt="Jump N Splash logo banner with the bull mascot and 337-517-3287" loading="lazy" /><span class="booth-tag">Jump N Splash</span></button>
+          <button class="booth-card" type="button" data-booth-index="5"><img src="assets/images/amos/amos-banner-rent-from-us.jpg" alt="Rent From Us banner for the inflatable splash zone" loading="lazy" /><span class="booth-tag">Rent from us</span></button>
+          <button class="booth-card" type="button" data-booth-index="6"><img src="assets/images/amos/amos-banner-autocare.jpg" alt="Badeaux's Auto Care banner — We Keep You Looking Good" loading="lazy" /><span class="booth-tag">Auto care</span></button>
+          <button class="booth-card" type="button" data-booth-index="7"><img src="assets/images/amos/amos-banner-autocare-wide.jpg" alt="Amos's Auto Care booth with the full banner strung up" loading="lazy" /><span class="booth-tag">The booth</span></button>
         </div>
       </div>
     </section>
@@ -131,10 +156,10 @@
       <div class="container">
         <div class="section-heading split-heading">
           <div><p class="eyebrow eyebrow-silver"><span></span> Showroom finish</p><h2 id="autocare-title">LEAVE<br /><span>SHINING.</span></h2></div>
-          <p class="section-intro">These are representative showcase images for the launch. Replace them with Amos's own before-and-after work from the media manager whenever you are ready.</p>
+          <p class="section-intro">That booth banner is the real one, strung up at Amos's own Auto Care tent. His before-and-after shots land here through the media manager as they get taken.</p>
         </div>
         <div class="auto-showcase">
-          <figure class="auto-feature"><img src="assets/images/professional-car-detailing-clean-vehicle-1.jpg" alt="Detailer polishing a sleek black vehicle" loading="lazy" /><figcaption><span>01 / Exterior detail</span><strong>Mirror finish.<br />Zero shortcuts.</strong></figcaption></figure>
+          <figure class="auto-feature"><img src="assets/images/amos/amos-banner-autocare-wide.jpg" alt="Amos's real Badeaux's Auto Care booth banner strung up at the tent" loading="lazy" /><figcaption><span>01 / The real booth</span><strong>Mirror finish.<br />Zero shortcuts.</strong></figcaption></figure>
           <div class="auto-services"><div class="mini-service"><span>01</span><div><strong>Hand wash</strong><small>Cleaned with care, not a conveyor belt.</small></div></div><div class="mini-service"><span>02</span><div><strong>Full detail</strong><small>Interior reset and exterior revival.</small></div></div><div class="mini-service"><span>03</span><div><strong>Window tint</strong><small>Comfort, privacy, and a cleaner look.</small></div></div><div class="mini-service"><span>04</span><div><strong>Ceramic coat</strong><small>Longer-lasting gloss and protection.</small></div></div><a class="button button-outline" href="tel:+13375173287">Ask about your ride <span>↗</span></a></div>
         </div>
       </div>
@@ -148,8 +173,8 @@
         </div>
         <div class="limo-layout">
           <div class="limo-gallery">
-            <figure class="limo-main-image"><img src="assets/images/luxury-party-bus-limousine-exterior-at-n-2.jpg" alt="Luxury party bus exterior" loading="lazy" /><span class="image-tag">The party bus</span></figure>
-            <div class="limo-thumbs"><button class="limo-thumb active" type="button" data-image="assets/images/luxury-party-bus-limousine-exterior-at-n-2.jpg" data-alt="Luxury party bus exterior"><img src="assets/images/luxury-party-bus-limousine-exterior-at-n-2.jpg" alt="" /></button><button class="limo-thumb" type="button" data-image="assets/images/luxury-party-bus-limousine-exterior-at-n-1.webp" data-alt="Party bus interior with LED lights"><img src="assets/images/luxury-party-bus-limousine-exterior-at-n-1.webp" alt="" /></button></div>
+            <figure class="limo-main-image"><img src="assets/images/amos/amos-banner-limo.jpg" alt="Amos's real Ride in Style limo service banner — call or text Amos 337-517-3287" loading="lazy" /><span class="image-tag">The real banner</span></figure>
+            <div class="limo-thumbs"><button class="limo-thumb active" type="button" data-image="assets/images/amos/amos-banner-limo.jpg" data-alt="Amos's real Ride in Style limo service banner — call or text Amos 337-517-3287"><img src="assets/images/amos/amos-banner-limo.jpg" alt="" /></button><button class="limo-thumb" type="button" data-image="assets/images/luxury-party-bus-limousine-exterior-at-n-1.webp" data-alt="Party bus interior with LED lights"><img src="assets/images/luxury-party-bus-limousine-exterior-at-n-1.webp" alt="" /></button></div>
             <div class="limo-facts"><span><strong>Up to 24</strong> guests</span><span><strong>2 hour</strong> minimum</span><span><strong>Custom</strong> routes</span></div>
           </div>
           <div class="quote-panel">
@@ -196,7 +221,7 @@
     <div class="container footer-grid"><div><a class="brand" href="#top"><span class="brand-mark">AB</span><span class="brand-copy"><strong>AMOS</strong><em>BADEAUX</em></span></a><p class="footer-tagline">The man who sells fun.</p></div><div><p class="footer-label">Explore</p><a href="#services">Businesses</a><a href="#calendar">Calendar</a><a href="#jump-splash">Jump N Splash</a><a href="#limousine">Limo quote</a></div><div><p class="footer-label">Get in touch</p><a href="tel:+13375173287">337-517-3287</a><a href="sms:+13375173287">Text Amos</a><a href="#contact">Send a note</a></div><div><p class="footer-label">For the team</p><a href="admin.html">Media manager <span>↗</span></a><p class="footer-small">Swap in the real gallery, add new inventory, and keep the season current.</p></div></div><div class="container footer-bottom"><span>© <span id="copyrightYear">2026</span> Amos Badeaux</span><span>Built for good times in Louisiana ✦</span></div>
   </footer>
 
-  <div class="modal" id="galleryModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden><div class="modal-backdrop" data-close-modal></div><div class="modal-shell"><button class="modal-close" type="button" data-close-modal aria-label="Close gallery">×</button><div class="modal-media"><img id="modalImage" src="" alt="" /><button class="modal-arrow modal-prev" type="button" aria-label="Previous item">‹</button><button class="modal-arrow modal-next" type="button" aria-label="Next item">›</button></div><div class="modal-details"><div><p class="eyebrow eyebrow-pink"><span></span> Jump N Splash</p><h2 id="modalTitle">Inventory item</h2><p id="modalDescription"></p></div><div class="modal-meta"><span id="modalCategory"></span><strong id="modalPrice"></strong></div></div></div></div>
+  <div class="modal" id="galleryModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden><div class="modal-backdrop" data-close-modal></div><div class="modal-shell"><button class="modal-close" type="button" data-close-modal aria-label="Close gallery">×</button><div class="modal-media"><img id="modalImage" src="" alt="" /><button class="modal-arrow modal-prev" type="button" aria-label="Previous item">‹</button><button class="modal-arrow modal-next" type="button" aria-label="Next item">›</button></div><div class="modal-details"><div><p class="eyebrow eyebrow-pink" id="modalEyebrow"><span></span> Jump N Splash</p><h2 id="modalTitle">Inventory item</h2><p id="modalDescription"></p></div><div class="modal-meta"><span id="modalCategory"></span><strong id="modalPrice"></strong></div></div></div></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
 </body>
