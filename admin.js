@@ -1,13 +1,14 @@
 (() => {
   const INVENTORY_KEY = "amos_inventory_v1";
+  const HERO_KEY = "amos_hero_image_v1";
   const QUOTE_KEY = "amos_quote_requests_v1";
   const defaults = [
-    { id: "rainbow-rush", category: "Bounce houses", name: "Rainbow Rush Combo", description: "Bounce, climb, and slide in one bright setup.", price: "From $325", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Big favorite" },
-    { id: "block-party", category: "Bounce houses", name: "Block Party Castle", description: "A classic jump for birthdays and neighborhood days.", price: "From $250", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Classic" },
-    { id: "tropical-run", category: "Slides", name: "Tropical Splash Run", description: "A colorful wet-and-wild lane for hot Louisiana afternoons.", price: "From $375", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Wet or dry" },
-    { id: "double-lane", category: "Slides", name: "Double Lane Rush", description: "Two lanes means more races and less waiting around.", price: "From $425", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "New" },
-    { id: "dunk-tank", category: "Splash & games", name: "Dunk Tank", description: "The one everybody says they will try once.", price: "From $275", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Crowd pleaser" },
-    { id: "water-day", category: "Splash & games", name: "Water Day Setup", description: "A flexible splash zone built around your space and party.", price: "Call for quote", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Custom" }
+    { id: "rainbow-rush", category: "Inflatables", name: "Rainbow Rush Combo", description: "Bounce, climb, and slide in one bright setup.", price: "From $325", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Big favorite" },
+    { id: "block-party", category: "Inflatables", name: "Block Party Castle", description: "A classic jump for birthdays and neighborhood days.", price: "From $250", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Classic" },
+    { id: "tropical-run", category: "Water slides", name: "Tropical Splash Run", description: "A colorful wet-and-wild lane for hot Louisiana afternoons.", price: "From $375", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Wet or dry" },
+    { id: "double-lane", category: "Water slides", name: "Double Lane Rush", description: "Two lanes means more races and less waiting around.", price: "From $425", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "New" },
+    { id: "dunk-tank", category: "Games & splash", name: "Dunk Tank", description: "The one everybody says they will try once.", price: "From $275", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Crowd pleaser" },
+    { id: "water-day", category: "Games & splash", name: "Water Day Setup", description: "A flexible splash zone built around your space and party.", price: "Call for quote", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Custom" }
   ];
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -21,10 +22,19 @@
     window.__adminToast = setTimeout(() => node.classList.remove("show"), 4200);
   };
   const cloneDefaults = () => defaults.map((item) => ({ ...item }));
+  const categoryAliases = {
+    "Bounce houses": "Inflatables",
+    "Slides": "Water slides",
+    "Splash & games": "Games & splash"
+  };
+  const normalizeInventory = (items) => items.map((item) => ({
+    ...item,
+    category: categoryAliases[item.category] || item.category
+  }));
   const readInventory = () => {
     try {
       const value = JSON.parse(localStorage.getItem(INVENTORY_KEY));
-      return Array.isArray(value) && value.length ? value : cloneDefaults();
+      return Array.isArray(value) && value.length ? normalizeInventory(value) : cloneDefaults();
     } catch (_) { return cloneDefaults(); }
   };
   let inventory = readInventory();
@@ -49,6 +59,16 @@
     const query = ($("#mediaSearch")?.value || "").trim().toLowerCase();
     return inventory.filter((item) => !query || `${item.name} ${item.category} ${item.description}`.toLowerCase().includes(query));
   };
+  const setFeatured = (id) => {
+    const item = inventory.find((entry) => entry.id === id);
+    if (!item) return;
+    try {
+      localStorage.setItem(HERO_KEY, item.image);
+      toast(`${item.name} is now the public landing image.`);
+    } catch (_) {
+      toast("That image could not be saved as the landing image. Try a smaller file.");
+    }
+  };
   const renderMedia = () => {
     const grid = $("#mediaGrid");
     if (!grid) return;
@@ -56,7 +76,7 @@
     grid.innerHTML = visible.length ? visible.map((item) => `
       <article class="media-card" draggable="true" data-id="${item.id}">
         <div class="media-card-image"><span class="drag-grip" title="Drag to reorder">⠿</span><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" /></div>
-        <div class="media-card-body"><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.description)}</p><div class="media-card-meta"><span>${escapeHtml(item.category)}</span><strong>${escapeHtml(item.price)}</strong></div><div class="card-actions"><button type="button" data-edit="${escapeHtml(item.id)}">Edit</button><button class="delete-item" type="button" data-delete="${escapeHtml(item.id)}">Remove</button></div></div>
+        <div class="media-card-body"><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.description)}</p><div class="media-card-meta"><span>${escapeHtml(item.category)}</span><strong>${escapeHtml(item.price)}</strong></div><div class="card-actions"><button type="button" data-feature="${escapeHtml(item.id)}">Use on landing</button><button type="button" data-edit="${escapeHtml(item.id)}">Edit</button><button class="delete-item" type="button" data-delete="${escapeHtml(item.id)}">Remove</button></div></div>
       </article>
     `).join("") : `<div class="empty-state">No inventory matches that search.</div>`;
     $$(".media-card", grid).forEach((card) => {
@@ -78,6 +98,7 @@
         saveInventory(); renderMedia(); toast("Lineup order saved. The public gallery will follow it.");
       });
     });
+    $$('[data-feature]', grid).forEach((button) => button.addEventListener("click", () => setFeatured(button.dataset.feature)));
     $$('[data-edit]', grid).forEach((button) => button.addEventListener("click", () => openEditor(button.dataset.edit)));
     $$('[data-delete]', grid).forEach((button) => button.addEventListener("click", () => removeItem(button.dataset.delete)));
     updateStats();
@@ -92,7 +113,7 @@
     editForm.elements.id.value = item?.id || "";
     editForm.elements.name.value = item?.name || "New inventory item";
     editForm.elements.price.value = item?.price || "Call for quote";
-    editForm.elements.category.value = item?.category || "Bounce houses";
+    editForm.elements.category.value = item?.category || "Inflatables";
     editForm.elements.description.value = item?.description || "Add a short description for customers.";
     editForm.elements.badge.value = item?.badge || "Available";
     editModal.hidden = false;

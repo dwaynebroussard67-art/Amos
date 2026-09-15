@@ -1,14 +1,15 @@
 /* Amos Badeaux — small, framework-free interactions for the static launch site. */
 (() => {
   const INVENTORY_KEY = "amos_inventory_v1";
+  const HERO_KEY = "amos_hero_image_v1";
   const QUOTE_KEY = "amos_quote_requests_v1";
   const defaultInventory = [
-    { id: "rainbow-rush", category: "Bounce houses", name: "Rainbow Rush Combo", description: "Bounce, climb, and slide in one bright setup.", price: "From $325", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Big favorite" },
-    { id: "block-party", category: "Bounce houses", name: "Block Party Castle", description: "A classic jump for birthdays and neighborhood days.", price: "From $250", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Classic" },
-    { id: "tropical-run", category: "Slides", name: "Tropical Splash Run", description: "A colorful wet-and-wild lane for hot Louisiana afternoons.", price: "From $375", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Wet or dry" },
-    { id: "double-lane", category: "Slides", name: "Double Lane Rush", description: "Two lanes means more races and less waiting around.", price: "From $425", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "New" },
-    { id: "dunk-tank", category: "Splash & games", name: "Dunk Tank", description: "The one everybody says they will try once.", price: "From $275", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Crowd pleaser" },
-    { id: "water-day", category: "Splash & games", name: "Water Day Setup", description: "A flexible splash zone built around your space and party.", price: "Call for quote", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Custom" }
+    { id: "rainbow-rush", category: "Inflatables", name: "Rainbow Rush Combo", description: "Bounce, climb, and slide in one bright setup.", price: "From $325", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Big favorite" },
+    { id: "block-party", category: "Inflatables", name: "Block Party Castle", description: "A classic jump for birthdays and neighborhood days.", price: "From $250", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Classic" },
+    { id: "tropical-run", category: "Water slides", name: "Tropical Splash Run", description: "A colorful wet-and-wild lane for hot Louisiana afternoons.", price: "From $375", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Wet or dry" },
+    { id: "double-lane", category: "Water slides", name: "Double Lane Rush", description: "Two lanes means more races and less waiting around.", price: "From $425", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "New" },
+    { id: "dunk-tank", category: "Games & splash", name: "Dunk Tank", description: "The one everybody says they will try once.", price: "From $275", image: "assets/images/colorful-inflatable-bounce-house-water-s-2.jpg", badge: "Crowd pleaser" },
+    { id: "water-day", category: "Games & splash", name: "Water Day Setup", description: "A flexible splash zone built around your space and party.", price: "Call for quote", image: "assets/images/colorful-inflatable-bounce-house-water-s-1.jpg", badge: "Custom" }
   ];
   const events = [
     { month: "june", day: "13", monthLabel: "Jun", title: "Summer inventory preview", description: "See the newest fireworks arrivals before the big weekends.", kind: "Inventory drop" },
@@ -21,10 +22,19 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>\"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[character]);
+  const categoryAliases = {
+    "Bounce houses": "Inflatables",
+    "Slides": "Water slides",
+    "Splash & games": "Games & splash"
+  };
+  const normalizeInventory = (items) => items.map((item) => ({
+    ...item,
+    category: categoryAliases[item.category] || item.category
+  }));
   const inventoryFromStorage = () => {
     try {
       const stored = JSON.parse(localStorage.getItem(INVENTORY_KEY));
-      return Array.isArray(stored) && stored.length ? stored : defaultInventory;
+      return Array.isArray(stored) && stored.length ? normalizeInventory(stored) : defaultInventory;
     } catch (_) { return defaultInventory; }
   };
   const toast = (message) => {
@@ -48,6 +58,20 @@
       siteNav.classList.remove("open");
       menuToggle.setAttribute("aria-expanded", "false");
     }));
+  }
+
+  // Let the approved photo selected in the media manager lead the landing page.
+  // The bundled fireworks image remains a safe fallback for a fresh browser.
+  const heroImage = $("#heroImage");
+  if (heroImage) {
+    try {
+      const featuredImage = localStorage.getItem(HERO_KEY);
+      if (featuredImage) heroImage.src = featuredImage;
+    } catch (_) { /* Browser storage can be unavailable in private previews. */ }
+    heroImage.addEventListener("error", () => {
+      const fallback = heroImage.dataset.fallback;
+      if (fallback && heroImage.src !== new URL(fallback, window.location.href).href) heroImage.src = fallback;
+    });
   }
 
   // Dynamic year and lightweight season status.
